@@ -37,7 +37,7 @@ struct customer
 
 struct profile
 {
-    int id;
+    char username[32];
     char password[32];
     bool admin;
 };
@@ -65,14 +65,14 @@ const std::string CurrentDateTime()
     return buf;
 }
 
-void Menu()
+void Menu(bool adm)
 {
 
 }
 
 void Login()
 {
-    std::string username, password, un, pw;
+    std::string username, password, un, pw, adm;
 
     std::cout << "\n\n\n\n\n\t\t";
     std::cout << "User Login\n\n";
@@ -86,10 +86,15 @@ void Login()
     {
         getline(read, un);
         getline(read, pw);
+        getline(read, adm);
         if (un == username && pw == password)
         {
             std::cout << "\n\n\t\t\t\tLogin successful.";
-            Menu();
+            
+            if (adm == "0")
+                Menu(false);
+            else if (adm == "1")
+                Menu(true);
         }
     }
     else
@@ -113,7 +118,7 @@ void Register()
     std::ofstream file;
     file.open(resourceLink + "RegisteredUsers\\" + username + ".txt", std::ofstream::out);
 
-    file << username << std::endl << password <<std::endl;
+    file << username << std::endl << password <<std::endl << false << std::endl;
     file.close();
 
     std::cout << "\n\n\t\t\t\tUser registration successful.";
