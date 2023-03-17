@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <windows.h>
 
-std::string resourceLink = "R:\\VSProjekte\\c++\CarRentalSystem\\CarRentalSystem\\Resources\\";
+std::string resourceLink = "R:\\VSProjekte\\c++\\CarRentalSystem\\CarRentalSystem\\Resources\\";
 
 void Fullscreen();
 void StartupMenu();
@@ -65,9 +65,38 @@ const std::string CurrentDateTime()
     return buf;
 }
 
-void Login()
+void Menu()
 {
 
+}
+
+void Login()
+{
+    std::string username, password, un, pw;
+
+    std::cout << "\n\n\n\n\n\t\t";
+    std::cout << "User Login\n\n";
+    std::cout << "\n\t\t\t\tEnter your username: ";
+    std::cin >> username;
+    std::cout << "\n\t\t\t\tEnter your password: ";
+    std::cin >> password;
+
+    std::ifstream read(resourceLink + "RegisteredUsers\\" + username + ".txt");
+    if (read.is_open()) 
+    {
+        getline(read, un);
+        getline(read, pw);
+        if (un == username && pw == password)
+        {
+            std::cout << "\n\n\t\t\t\tLogin successful.";
+            Menu();
+        }
+    }
+    else
+    {
+        std::cout << "\n\n\t\t\t\tWrong username or password.";
+        StartupMenu();
+    }
 }
 
 void Register()
@@ -89,6 +118,7 @@ void Register()
 
     std::cout << "\n\n\t\t\t\tUser registration successful.";
 
+    
     StartupMenu();
 }
 
